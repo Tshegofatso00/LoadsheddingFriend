@@ -43,6 +43,10 @@ LoadsheddingFriend is an Android app prototype designed to help users track load
 - **Target SDK:** 36
 
 ---
+### 🔥 Firebase Integration
+This project is connected to Firebase for Authentication and Realtime Database.
+The `google-services.json` file is included in `/app` to allow the marker to verify configuration.
+
 
 ## **Screenshots**
 > Add screenshots of the app running here (Login, Settings, Community Report, Chart screen)
