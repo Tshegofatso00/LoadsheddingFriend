@@ -1,6 +1,6 @@
 # LoadsheddingFriend
 
-LoadsheddingFriend is an Android app prototype demonstrating user authentication, community reporting, and offline features related to load shedding schedules. This project was built as part of an academic submission.
+LoadsheddingFriend is an Android app prototype designed to help users track load shedding schedules, submit community reports, and manage personal settings. This project was built for academic submission and demonstrates Firebase integration, local caching, and a simple user interface.
 
 ---
 
@@ -8,19 +8,24 @@ LoadsheddingFriend is an Android app prototype demonstrating user authentication
 
 ### ✅ Authentication
 - Firebase Email/Password registration and login
-- Users stored in Firebase Authentication → `/users`
+- Users are stored in Firebase Authentication
+- Realtime Database path: `/users/{uid}` stores user info (email, full name)
 
 ### ✅ Settings
-- Enable/disable notifications
-- Language toggle (English / isiZulu)
-- Clear local data
+- Enable/disable notifications (simulated with Toast messages)
+- Language toggle (English / isiZulu) using SharedPreferences
+- Clear local data (clears preferences)
 
 ### ✅ Community Report
 - Users can submit reports about outages
-- Reports stored in Firebase Realtime Database → `/reports`
+- Reports are stored in Firebase Realtime Database → `/reports/{report_id}`
+- Each report stores:
+    - `title` (text)
+    - `description` (text)
+    - `timestamp` (server time)
 
 ### ✅ Charts / Statistics
-- MPAndroidChart bar chart showing fake outage hours
+- MPAndroidChart bar chart displays fake outage hours for demonstration
 
 ### ✅ Offline Cache
 - Room database stores schedules locally for offline access
@@ -31,15 +36,16 @@ LoadsheddingFriend is an Android app prototype demonstrating user authentication
 
 - **Language:** Kotlin
 - **Framework:** Android Studio, Jetpack Compose
-- **Firebase Services:** Authentication, Realtime Database, Messaging
+- **Firebase Services:** Authentication, Realtime Database, Cloud Messaging
 - **Chart Library:** MPAndroidChart
 - **Local Database:** Room
+- **Minimum SDK:** 24
+- **Target SDK:** 36
 
 ---
 
 ## **Screenshots**
-
-> 
+> Add screenshots of the app running here (Login, Settings, Community Report, Chart screen)
 
 ---
 
