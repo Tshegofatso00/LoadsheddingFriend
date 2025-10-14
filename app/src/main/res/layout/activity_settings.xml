@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Notifications Switch -->
+    <Switch
+        android:id="@+id/switch_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:minHeight="48dp"
+        android:text="@string/notifications_label" />
+
+    <!-- Language switch button -->
+    <Button
+        android:id="@+id/btnChangeLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_language_button"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Current language display -->
+    <TextView
+        android:id="@+id/tvCurrentLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_language_en"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Clear Data button -->
+    <Button
+        android:id="@+id/btnClearData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_data_button"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Close button -->
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/close_button"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

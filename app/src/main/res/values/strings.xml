@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">LoadsheddingFriend</string>
+
+    <!-- SETTINGS SCREEN STRINGS -->
+    <string name="settings_title">Settings</string>
+    <string name="notifications_label">Notifications</string>
+    <string name="language_label">Language</string>
+    <string name="change_language_button">Toggle Language</string>
+    <string name="clear_data_button">Clear Local Data</string>
+    <string name="close_button">Close</string>
+
+    <!-- TOAST MESSAGES -->
+    <string name="notifications_enabled_toast">Notifications enabled</string>
+    <string name="notifications_disabled_toast">Notifications disabled</string>
+    <string name="language_changed_to">Language changed to %1$s</string>
+    <string name="data_cleared_toast">Local data cleared</string>
+
+    <!-- LANGUAGE LABELS -->
+    <string name="current_language_en">English</string>
+    <string name="current_language_zu">isiZulu</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="notifications_label">Vula izaziso</string>
+    <string name="change_language_button">Shintsha isiZulu</string>
+    <string name="notifications_enabled_toast">Izaziso zivuliwe</string>
+    <string name="notifications_disabled_toast">Izaziso zivaliwe</string>
+    <string name="current_language_zu">isiZulu</string>
+</resources>
