@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "707654273702",
+    "project_id": "loadsheddingfriend-972c4",
+    "storage_bucket": "loadsheddingfriend-972c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707654273702:android:7b970e6926ed4693fe8267",
+        "android_client_info": {
+          "package_name": "za.co.tshegojabu.loadsheddingfriend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6K9PAWvAGMp2POXm_SZdTwzT8NISebEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
