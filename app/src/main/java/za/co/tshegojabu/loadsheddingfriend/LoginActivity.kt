@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import java.security.MessageDigest  // 👈 for hashing passwords
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,12 +25,15 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
-            val password = passwordInput.text.toString().trim()
+            val rawPassword = passwordInput.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
+            if (email.isEmpty() || rawPassword.isEmpty()) {
                 Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // 🔐 Hash the password before sending to Firebase
+            val password = hashPassword(rawPassword)
 
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -44,4 +48,10 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
     }
+}
+
+// 🔹 Hashing function (below the class)
+fun hashPassword(password: String): String {
+    val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+    return bytes.joinToString("") { "%02x".format(it) }
 }
