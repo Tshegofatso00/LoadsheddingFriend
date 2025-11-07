@@ -1,97 +1,56 @@
-package za.co.tshegojabu.loadsheddingfriend.ui.theme
+package za.co.tsegojabu.loadsheddingfriend
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.TextView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import za.co.tshegojabu.loadsheddingfriend.R
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import za.co.tshegojabu.loadsheddingfriend.models.UserProfile
+import java.security.MessageDigest  // for hashing passwords
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    companion object {
-        private const val TAG = "RegisterActivity"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
 
-        val inputFullName = findViewById<TextInputEditText>(R.id.inputFullName)
-        val inputEmail = findViewById<TextInputEditText>(R.id.inputEmail)
-        val inputPassword = findViewById<TextInputEditText>(R.id.inputPassword)
-        val btnRegister = findViewById<Button>(R.id.btnRegister)
-        val tvGoToLogin = findViewById<TextView>(R.id.tvGoToLogin)
+        val emailInput = findViewById<EditText>(R.id.emailInput)
+        val passwordInput = findViewById<EditText>(R.id.passwordInput)
+        val registerButton = findViewById<Button>(R.id.registerButton)
 
-        btnRegister.setOnClickListener {
-            val fullName = inputFullName.text?.toString()?.trim() ?: ""
-            val email = inputEmail.text?.toString()?.trim() ?: ""
-            val password = inputPassword.text?.toString()?.trim() ?: ""
+        registerButton.setOnClickListener {
+            val email = emailInput.text.toString().trim()
+            val rawPassword = passwordInput.text.toString().trim()
 
-            if (fullName.isEmpty()) {
-                inputFullName.error = "Please enter your full name"
-                return@setOnClickListener
-            }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                inputEmail.error = "Please enter a valid email"
-                return@setOnClickListener
-            }
-            if (password.length < 6) {
-                inputPassword.error = "Password must be at least 6 characters"
+            if (email.isEmpty() || rawPassword.isEmpty()) {
+                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            registerUser(fullName, email, password)
-        }
+            // 🔐 Hash the password before sending to Firebase
+            val password = hashPassword(rawPassword)
 
-        tvGoToLogin.setOnClickListener {
-            Toast.makeText(this, "Login screen coming soon", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun registerUser(fullName: String, email: String, password: String) {
-        Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val firebaseUser = auth.currentUser
-                    val uid = firebaseUser?.uid ?: ""
-                    Log.d(TAG, "Registration successful: $uid")
-
-                    val userProfile = UserProfile(
-                        uid = uid,
-                        fullName = fullName,
-                        email = email,
-                        createdAt = System.currentTimeMillis()
-                    )
-
-                    val dbRef = Firebase.database.reference.child("users").child(uid)
-                    dbRef.setValue(userProfile)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Profile saved successfully!", Toast.LENGTH_SHORT).show()
-                            Log.d(TAG, "Profile saved in database for uid=$uid")
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Failed to save profile: ${e.message}", Toast.LENGTH_LONG).show()
-                            Log.e(TAG, "Database error: ${e.message}")
-                        }
-                } else {
-                    val message = task.exception?.localizedMessage ?: "Unknown error"
-                    Toast.makeText(this, "Registration failed: $message", Toast.LENGTH_LONG).show()
-                    Log.e(TAG, "Registration failed: $message")
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+        }
     }
+}
+
+// 🔹 Hashing function (below the class)
+fun hashPassword(password: String): String {
+    val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+    return bytes.joinToString("") { "%02x".format(it) }
 }
